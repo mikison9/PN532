@@ -136,6 +136,7 @@ public:
     uint32_t getFirmwareVersion(void);
     uint32_t readRegister(uint16_t reg);
     uint32_t writeRegister(uint16_t reg, uint8_t val);
+    uint32_t inCommunicateThru(uint8_t *cmd, uint8_t len);
     bool writeGPIO(uint8_t pinstate);
     uint8_t readGPIO(void);
     bool setPassiveActivationRetries(uint8_t maxRetries);
