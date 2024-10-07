@@ -206,6 +206,29 @@ uint32_t PN532::writeRegister(uint16_t reg, uint8_t val)
     return 1;
 }
 
+uint32_t PN532::inCommunicateThru(uint8_t *cmd, uint8_t len)
+{
+    uint32_t response;
+
+    pn532_packetbuffer[0] = PN532_COMMAND_INCOMMUNICATETHRU;
+    for (int i = 0; i < len; i++) {
+        pn532_packetbuffer[i + 1] = cmd[i];
+    }
+
+
+    if (HAL(writeCommand)(pn532_packetbuffer, 4)) {
+        return 0;
+    }
+
+    // read data packet
+    int16_t status = HAL(readResponse)(pn532_packetbuffer, sizeof(pn532_packetbuffer));
+    if (0 > status) {
+        return 0;
+    }
+
+    return 1;
+}
+
 /**************************************************************************/
 /*!
     Writes an 8-bit value that sets the state of the PN532's GPIO pins
